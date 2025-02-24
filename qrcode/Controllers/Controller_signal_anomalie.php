@@ -4,10 +4,17 @@ class Controller_signal_anomalie extends Controller {
     public function action_default() {
         if(isset($_SESSION["connecte"])) {
             $m = Model::getModel();
+            if(isset($_GET["id"])) {
+                $id = $_GET["id"];
+            }
+            else {
+                $id = null;
+            }
             $data = [
                 'title' => "Signaler une anomalie",
                 'equipements' => $m->getListeEquipements(),
-                'typesAnomalie' => $m->getTypesAnomalie()
+                'typesAnomalie' => $m->getTypesAnomalie(),
+                'materielDefaut' => $id
             ];
             $this->render("signal_anomalie", $data);
         }
@@ -17,9 +24,18 @@ class Controller_signal_anomalie extends Controller {
     }
 
     public function action_insert() {
-        if(phpCAS::isAuthenticated()) {
+        if(isset($_SESSION["connecte"])) {
             $m = Model::getModel();
-            if(isset($_POST["lien-photo"]) && $_POST["lien-photo"] == "") {
+            if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
+                $upload_dir = "Content/img/";
+                $file_name = basename($_FILES["lien-photo"]["name"]);
+                $target_file = $upload_dir . $file_name;
+                if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
+                    $_POST["lien-photo"] = $file_name;
+                } else {
+                    $this->action_error("Une error a eu lieu lors de l'importation de la photo.");
+                }
+            } else {
                 $_POST["lien-photo"] = null;
             }
             var_dump($_POST);

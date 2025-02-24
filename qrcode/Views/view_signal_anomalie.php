@@ -1,13 +1,16 @@
 <?php require "view_begin.php" ?>
 
             <h2>SIGNALER UNE ANOMALIE</h2>
-            <form action="?controller=signal_anomalie&action=insert" method="post" id="form-anomalie" autocomplete="off">
+            <form action="?controller=signal_anomalie&action=insert" method="post" id="form-anomalie" autocomplete="off" enctype="multipart/form-data">
                 <div>
                     <label>Matériel  :</label>
                     <select name="id-equipement" required>
                         <option value="">Séléctionner le matériel</option>
                         <?php foreach($equipements as $e): ?>
-                            <option value="<?= e($e["id_equipement"]) ?>"><?= e($e["type_equipement"]) ?> <?= e($e["id_equipement"]) ?></option>
+                            <option value="<?= e($e["id_equipement"]) ?>"
+                            <?php if(e($e["id_equipement"]) == $materielDefaut): ?>selected<?php endif ?>>
+                                <?= e($e["type_equipement"]) ?> <?= e($e["id_equipement"]) ?>
+                            </option>
                         <?php endforeach ?>
                     </select>
                 </div>

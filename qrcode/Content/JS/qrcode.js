@@ -161,3 +161,25 @@ let saisieSalle = document.getElementById("ajout-banc-salle");
 if(saisieSalle) {
     autocomplete(saisieSalle, liste_salles);
 }
+
+let refBanc = document.querySelector(".refBanc");
+if(refBanc) {
+    refBanc.addEventListener("change", function() {
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search);
+        let tab = this.value.split(', ');
+        params.set("banc",  tab[0]);
+        params.set("salle", tab[1]);
+        document.location.href = "?" + params;
+    });
+}
+
+let refMateriel = document.querySelector(".refMateriel");
+if(refMateriel) {
+    refMateriel.addEventListener("change", function() {
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search);
+        params.set("id",  this.value);
+        document.location.href = "?" + params;
+    });
+}

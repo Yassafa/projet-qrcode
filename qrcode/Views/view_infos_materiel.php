@@ -16,9 +16,9 @@
 
             <div id="liste-boutons">
                 <?php if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant"): ?>
-                    <a class="bouton bleu" id="deplacer" href="?controller=deplacement">Déplacer</a>
+                    <a class="bouton bleu" id="deplacer" href="?controller=deplacement&id=<?= e($infosMateriel["id_equipement"]) ?>">Déplacer</a>
                 <?php endif ?>
-                <a class="bouton rouge" id="signaler" href="?controller=signal_anomalie">⚠ Signaler une anomalie</a>
+                <a class="bouton rouge" id="signaler" href="?controller=signal_anomalie&id=<?= e($infosMateriel["id_equipement"]) ?>">⚠ Signaler une anomalie</a>
                 <a class="bouton bleu" id="logs" href="?controller=infos_materiel&action=logs&id=<?= e($infosMateriel["id_equipement"]) ?>">Historique des déplacements</a>
             </div>
 

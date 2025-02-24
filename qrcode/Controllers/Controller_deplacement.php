@@ -5,10 +5,20 @@ class Controller_deplacement extends Controller {
         if(isset($_SESSION["connecte"])) {
             if($_SESSION["role"] !== "Etudiant") {
                 $m = Model::getModel();
+                if(isset($_GET["id"])) {
+                    $id = $_GET["id"];
+                    $banc = $m->getInfosEquipement($id);
+                }
+                else {
+                    $id = null;
+                    $banc = null;
+                }
                 $data = [
                     'title' => "Déplacer un équipement",
                     'equipements' => $m->getListeEquipements(),
-                    'bancs' => $m->getListeBancs()
+                    'bancs' => $m->getListeBancs(),
+                    'materielDefaut' => $id,
+                    'bancDefaut' => $banc
                 ];
                 $this->render("deplacement", $data);
             }

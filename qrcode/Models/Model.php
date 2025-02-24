@@ -215,9 +215,10 @@ class Model {
         $req = $this->bd->prepare(
             'INSERT INTO anomalie(date_signalement, description_anomalie,
             personne_signalant, lien_photo, type_anomalie, id_equipement) 
-            VALUES (CURDATE(), :dsc, null, :pht, :typ, :ide)'
+            VALUES (CURDATE(), :dsc, :prs, :pht, :typ, :ide)'
         );
         $req->bindValue(':dsc', $data["description-anomalie"]);
+        $req->bindValue(':prs', $_SESSION["role"]);
         $req->bindValue(':pht', $data["lien-photo"]);
         $req->bindValue(':typ', $data["type-anomalie"]);
         $req->bindValue(':ide', $data["id-equipement"]);
@@ -228,9 +229,10 @@ class Model {
         $req = $this->bd->prepare(
             'INSERT INTO deplacement(date_deplacement, description_deplacement, personne_deplacant,
             id_salle_origine, id_banc_origine, id_salle_destination, id_banc_destination, id_equipement)
-            VALUES (CURDATE(), :dsc, null, :ids_or, :idb_or, :ids_ds, :idb_ds, :ide)'
+            VALUES (CURDATE(), :dsc, :prs, :ids_or, :idb_or, :ids_ds, :idb_ds, :ide)'
         );
         $req->bindValue(':dsc', $data["description-deplacement"]);
+        $req->bindValue(':prs', $_SESSION["role"]);
         $req->bindValue(':ids_or', $data["id-salle-origine"]);
         $req->bindValue(':idb_or', $data["id-banc-origine"]);
         $req->bindValue(':ids_ds', $data["id-salle-destination"]);

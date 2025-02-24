@@ -98,7 +98,19 @@ class Controller_admin extends Controller {
             if(!(isset($_POST["id-banc"]) && isset($_POST["id-salle"]) && $m->getBanc($_POST["id-banc"],$_POST['id-salle']))){
                 $this->action_error("Lieu affectation invalide");
             }
-            var_dump($_POST);
+            if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
+                $upload_dir = "Content/img/";
+                $file_name = basename($_FILES["lien-photo"]["name"]);
+                $target_file = $upload_dir . $file_name;
+                if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
+                    $_POST["lien-photo"] = $target_file;
+                } else {
+                    $this->action_error("Une error a eu lieu lors de l'importation de la photo.");
+                }
+            } else {
+                $this->action_error("Aucun fichier importé.");
+            }
+            var_dump($_POST,$_FILES);
             $m->addEquipement($_POST);
         }
         else {
@@ -163,10 +175,23 @@ class Controller_admin extends Controller {
     public function action_modifier_banc() {
         if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant") {
             $m = Model::getModel();
+            if(isset($_GET["banc"]) && isset($_GET["salle"])) {
+                $banc = $_GET["banc"];
+                $salle = $_GET["salle"];
+                $infos = $m->getBanc($banc, $salle);
+            }
+            else {
+                $banc = null;
+                $salle = null;
+                $infos = null;
+            }
             $data = [
                 'title' => "Modifier un banc",
                 'bancs' => $m->getListeBancs(),
-                'fournisseurs' => $m->getListeFournisseurs()
+                'fournisseurs' => $m->getListeFournisseurs(),
+                'bancDefaut' =>  $banc,
+                'salleDefaut' => $salle,
+                'infosDefaut' => $infos
             ];
             $this->render("modif_banc", $data);
         }
@@ -198,12 +223,22 @@ class Controller_admin extends Controller {
     public function action_modifier_materiel() {
         if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant") {
             $m = Model::getModel();
+            if(isset($_GET["id"])) {
+                $id = $_GET["id"];
+                $infos = $m->getEquipement($id);
+            }
+            else {
+                $id = null;
+                $infos = null;
+            }
             $data = [
                 'title' => "Modifier un équipement",
                 'equipements' => $m->getListeEquipements(),
                 'typesEquipement' => $m->getListeTypes(),
                 'salles' => $m->getListeSalles(),
-                'fournisseurs' => $m->getListeFournisseurs()
+                'fournisseurs' => $m->getListeFournisseurs(),
+                'materielDefaut' => $id,
+                'infosDefaut' => $infos
             ];
             $this->render("modif_materiel", $data);
         }
@@ -223,6 +258,19 @@ class Controller_admin extends Controller {
             }
             if(!(isset($_POST["id-banc"]) && isset($_POST["id-salle"]) && $m->getBanc($_POST["id-banc"],$_POST['id-salle']))){
                 $this->action_error("Lieu affectation invalide");
+            }
+            if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
+                $upload_dir = "Content/img/";
+                $file_name = basename($_FILES["lien-photo"]["name"]);
+                $target_file = $upload_dir . $file_name;
+                if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
+                    $_POST["lien-photo"] = $target_file;
+                } else {
+                    $this->action_error("Une error a eu lieu lors de l'importation de la photo.");
+                }
+            } 
+            else {
+                $this->action_error("Aucun fichier importé.");
             }
             var_dump($_POST);
             $m->updateEquipement($_POST);

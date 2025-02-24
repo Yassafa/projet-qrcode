@@ -1,7 +1,7 @@
 <?php require "view_begin.php"; ?>
 
             <h2>AJOUTER UN ÉQUIPEMENT</h2>
-            <form action="?controller=admin&action=insert_materiel" method="post" id="form-ajout-materiel" autocomplete="off">
+            <form action="?controller=admin&action=insert_materiel" method="post" id="form-ajout-materiel" autocomplete="off" enctype="multipart/form-data">
                 <div>
                     <label>Identifiant :</label></br>
                     <input class="saisie" type="text" name="id-equipement" placeholder="Id" required/>
