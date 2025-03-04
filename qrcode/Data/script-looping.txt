@@ -1,0 +1,88 @@
+Sub Create_Tables()
+
+DoCmd.RunSQL "CREATE TABLE Type_equipement(" & _
+   "type_equipement VARCHAR(50)," & _
+   "description TEXT," & _
+   "PRIMARY KEY(type_equipement)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Fournisseur(" & _
+   "id_fournisseur VARCHAR(50)," & _
+   "nom_fournisseur VARCHAR(50) NOT NULL," & _
+   "email VARCHAR(50) NOT NULL," & _
+   "date_derniere_modif DATE," & _
+   "commentaires TEXT," & _
+   "PRIMARY KEY(id_fournisseur)," & _
+   "UNIQUE(email)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Etat(" & _
+   "etat VARCHAR(50)," & _
+   "PRIMARY KEY(etat)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Salle(" & _
+   "id_salle INT," & _
+   "nom_salle CHAR(50) NOT NULL," & _
+   "date_reamenagement DATE," & _
+   "PRIMARY KEY(id_salle)," & _
+   "UNIQUE(nom_salle)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Type_anomalie(" & _
+   "type_anomalie VARCHAR(50)," & _
+   "PRIMARY KEY(type_anomalie)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Banc(" & _
+   "id_salle INT," & _
+   "id_banc CHAR(50)," & _
+   "date_achat DATE," & _
+   "commentaires TEXT," & _
+   "id_fournisseur VARCHAR(50) NOT NULL," & _
+   "PRIMARY KEY(id_salle, id_banc)," & _
+   "FOREIGN KEY(id_salle) REFERENCES Salle(id_salle)," & _
+   "FOREIGN KEY(id_fournisseur) REFERENCES Fournisseur(id_fournisseur)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Equipement(" & _
+   "id_equipement CHAR(50)," & _
+   "date_achat DATE," & _
+   "infos_sup TEXT," & _
+   "lien_photo VARCHAR(50)," & _
+   "id_fournisseur VARCHAR(50) NOT NULL," & _
+   "id_salle_actuelle INT NOT NULL," & _
+   "etat VARCHAR(50) NOT NULL," & _
+   "id_salle_affectation INT NOT NULL," & _
+   "id_banc_affectation CHAR(50) NOT NULL," & _
+   "type_equipement VARCHAR(50) NOT NULL," & _
+   "PRIMARY KEY(id_equipement)," & _
+   "FOREIGN KEY(id_fournisseur) REFERENCES Fournisseur(id_fournisseur)," & _
+   "FOREIGN KEY(id_salle_actuelle) REFERENCES Salle(id_salle)," & _
+   "FOREIGN KEY(etat) REFERENCES Etat(etat)," & _
+   "FOREIGN KEY(id_salle_affectation, id_banc_affectation) REFERENCES Banc(id_salle, id_banc)," & _
+   "FOREIGN KEY(type_equipement) REFERENCES Type_equipement(type_equipement)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE Anomalie(" & _
+   "id_anomalie INT," & _
+   "date_siganlement DATE NOT NULL," & _
+   "description_anomalie TEXT," & _
+   "personne_signalant VARCHAR(50)," & _
+   "lien_photo VARCHAR(50)," & _
+   "type_anomalie VARCHAR(50) NOT NULL," & _
+   "id_equipement CHAR(50) NOT NULL," & _
+   "PRIMARY KEY(id_anomalie)," & _
+   "FOREIGN KEY(type_anomalie) REFERENCES Type_anomalie(type_anomalie)," & _
+   "FOREIGN KEY(id_equipement) REFERENCES Equipement(id_equipement)" & _
+");"   
+
+DoCmd.RunSQL "CREATE TABLE fournit(" & _
+   "type_equipement VARCHAR(50)," & _
+   "id_fournisseur VARCHAR(50)," & _
+   "PRIMARY KEY(type_equipement, id_fournisseur)," & _
+   "FOREIGN KEY(type_equipement) REFERENCES Type_equipement(type_equipement)," & _
+   "FOREIGN KEY(id_fournisseur) REFERENCES Fournisseur(id_fournisseur)" & _
+");"   
+
+End Sub
