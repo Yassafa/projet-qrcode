@@ -67,7 +67,7 @@ CREATE TABLE Equipement (
 
 CREATE TABLE Anomalie (
     id_anomalie SERIAL PRIMARY KEY,
-    date_signalement DATE NOT NULL,
+    date_signalement DATETIME NOT NULL,
     description_anomalie TEXT,
     personne_signalant VARCHAR(50),
     lien_photo VARCHAR(50),
@@ -77,7 +77,7 @@ CREATE TABLE Anomalie (
 
 CREATE TABLE Deplacement (
     id_deplacement SERIAL PRIMARY KEY,
-    date_deplacement DATE NOT NULL,
+    date_deplacement DATETIME NOT NULL,
     description_deplacement TEXT,
     personne_deplacant VARCHAR(50),
     id_salle_origine INT NOT NULL REFERENCES Banc(id_salle),

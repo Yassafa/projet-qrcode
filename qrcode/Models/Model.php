@@ -119,7 +119,7 @@ class Model {
         $req = $this->bd->prepare(
             'SELECT d.*, s_or.nom_salle AS nom_salle_origine,
             s_des.nom_salle AS nom_salle_destination,
-            DATE_FORMAT(d.date_deplacement, "%d/%m/%Y") AS date_deplacement_format
+            DATE_FORMAT(d.date_deplacement, "%d/%m/%Y à %H:%i") AS date_deplacement_format
             FROM deplacement d 
             JOIN salle s_or ON d.id_salle_origine = s_or.id_salle
             JOIN salle s_des ON d.id_salle_destination = s_des.id_salle
@@ -215,7 +215,7 @@ class Model {
         $req = $this->bd->prepare(
             'INSERT INTO anomalie(date_signalement, description_anomalie,
             personne_signalant, lien_photo, type_anomalie, id_equipement) 
-            VALUES (CURDATE(), :dsc, :prs, :pht, :typ, :ide)'
+            VALUES (NOW(), :dsc, :prs, :pht, :typ, :ide)'
         );
         $req->bindValue(':dsc', $data["description-anomalie"]);
         $req->bindValue(':prs', $_SESSION["role"]);
@@ -229,7 +229,7 @@ class Model {
         $req = $this->bd->prepare(
             'INSERT INTO deplacement(date_deplacement, description_deplacement, personne_deplacant,
             id_salle_origine, id_banc_origine, id_salle_destination, id_banc_destination, id_equipement)
-            VALUES (CURDATE(), :dsc, :prs, :ids_or, :idb_or, :ids_ds, :idb_ds, :ide)'
+            VALUES (NOW(), :dsc, :prs, :ids_or, :idb_or, :ids_ds, :idb_ds, :ide)'
         );
         $req->bindValue(':dsc', $data["description-deplacement"]);
         $req->bindValue(':prs', $_SESSION["role"]);

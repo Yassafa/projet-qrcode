@@ -56,11 +56,17 @@ class Controller_admin extends Controller {
             else {
                 $this->action_error("Aucun paramètre salle");
             }
+            if($m->getBanc($_POST["id-banc"], $m->getIdSalle($_POST["nom-salle"])["id_salle"])) {
+                $this->action_error("Ce banc existe déjà dans la base de données.");
+            }
             if ($_POST["date-achat"] === "") {
                 $_POST["date-achat"] = null;
             }
             $m->addBanc($_POST);
             var_dump($_POST);
+            $lien_destination = "https://jupyter.univ-paris13.fr/~12302332/projet-qrcode/qrcode/?controller=infos_banc&banc=" . $_POST["id-banc"] . "&salle=" . $_POST["id-salle"];
+            $lien_stockage = "Content/qrcodes/" . $_POST["id-banc"] . $_POST["nom-salle"] . ".png";
+            QRcode::png($lien_destination, $lien_stockage);
         }
         else {
             $this->action_default();
@@ -73,7 +79,7 @@ class Controller_admin extends Controller {
             $data = [
                 'title' => "Ajouter un équipement",
                 'typesEquipement' => $m->getListeTypes(),
-                'salles' => $m->getListeSalles(),
+                'bancs' => $m->getListeBancs(),
                 'fournisseurs' => $m->getListeFournisseurs()
             ];
             $this->render("ajout_materiel", $data);
@@ -89,14 +95,22 @@ class Controller_admin extends Controller {
             if(!(isset($_POST["id-equipement"]) && preg_match("/^[A-Z][0-9]{2}-[A-Z,0-9]{2}$/", $_POST["id-equipement"]))){
                 $this->action_error("Identifiant invalide");
             }
+            if($m->getEquipement($_POST["id-equipement"])) {
+                $this->action_error("Cet équipement existe déjà dans la base de données.");
+            }
             if ($_POST["date-achat"] === "") {
                 $_POST["date-achat"] = null;
             }
             if($_POST["id-fournisseur"] == "") {
                 $_POST["id-fournisseur"] = null;
             }
-            if(!(isset($_POST["id-banc"]) && isset($_POST["id-salle"]) && $m->getBanc($_POST["id-banc"],$_POST['id-salle']))){
-                $this->action_error("Lieu affectation invalide");
+            if(isset($_POST["banc"])) {
+                $tab = explode(',', $_POST["banc"]);
+                $_POST["id-banc"] = $tab[0];
+                $_POST["id-salle"] = $tab[1];
+            }
+            else {
+                $this->action_error("Lieu d'affectation non renseigné.");
             }
             if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
                 $upload_dir = "Content/img/";
@@ -105,13 +119,16 @@ class Controller_admin extends Controller {
                 if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
                     $_POST["lien-photo"] = $target_file;
                 } else {
-                    $this->action_error("Une error a eu lieu lors de l'importation de la photo.");
+                    $this->action_error("Une erreur a eu lieu lors de l'importation de la photo.");
                 }
             } else {
                 $this->action_error("Aucun fichier importé.");
             }
-            var_dump($_POST,$_FILES);
+            var_dump($_POST);
             $m->addEquipement($_POST);
+            $lien_destination = "https://jupyter.univ-paris13.fr/~12302332/projet-qrcode/qrcode/?controller=infos_materiel&id=" . $_POST["id-equipement"];
+            $lien_stockage = "Content/qrcodes/" . $_POST["id-equipement"] . ".png";
+            QRcode::png($lien_destination, $lien_stockage);
         }
         else {
             $this->action_default();
@@ -123,7 +140,7 @@ class Controller_admin extends Controller {
             $m = Model::getModel();
             $data = [
                 'title' => "Supprimer un banc",
-                'salles' => $m->getListeSalles()
+                'bancs' => $m->getListeBancs()
             ];
             $this->render("sup_banc", $data);
         }
@@ -148,8 +165,15 @@ class Controller_admin extends Controller {
 
     public function action_supprimer_materiel() {
         if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant") {
+            $m = Model::getModel();
+            $tab = $m->getListeEquipements();
+            $listeEquipements = [];
+            foreach($tab as $materiel) {
+                $listeEquipements[] = $materiel["id_equipement"];
+            }
             $data = [
-                'title' => "Supprimer un équipement"
+                'title' => "Supprimer un équipement",
+                'equipements' => $listeEquipements
             ];
             $this->render("sup_materiel", $data);
         }
@@ -203,9 +227,14 @@ class Controller_admin extends Controller {
     public function action_update_banc() {
         if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant") {
             $m = Model::getModel();
-            $tab = explode(',', $_POST["banc"]);
-            $_POST["id-banc"] = $tab[0];
-            $_POST["id-salle"] = $tab[1];
+            if(isset($_POST["banc"])){
+                $tab = explode(',', $_POST["banc"]);
+                $_POST["id-banc"] = $tab[0];
+                $_POST["id-salle"] = $tab[1];
+            }
+            else {
+                $this->action_error("Lieu affectation non renseigné.");
+            }
             if($_POST["date-achat"] === "") {
                 $_POST["date-achat"] = null;
             }
@@ -235,8 +264,8 @@ class Controller_admin extends Controller {
                 'title' => "Modifier un équipement",
                 'equipements' => $m->getListeEquipements(),
                 'typesEquipement' => $m->getListeTypes(),
-                'salles' => $m->getListeSalles(),
                 'fournisseurs' => $m->getListeFournisseurs(),
+                'bancs' => $m->getListeBancs(),
                 'materielDefaut' => $id,
                 'infosDefaut' => $infos
             ];
@@ -266,7 +295,7 @@ class Controller_admin extends Controller {
                 if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
                     $_POST["lien-photo"] = $target_file;
                 } else {
-                    $this->action_error("Une error a eu lieu lors de l'importation de la photo.");
+                    $this->action_error("Une erreur a eu lieu lors de l'importation de la photo.");
                 }
             } 
             else {

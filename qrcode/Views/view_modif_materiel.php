@@ -29,16 +29,15 @@
                     </select>
                 </div>
 
-                <div class="lieu-affectation">
-                    <label>Lieu d'affectation :</label>
-                    <input class="saisie" type="text" name="id-banc" placeholder="N°banc" 
-                    <?php if($infosDefaut): ?>value="<?= e($infosDefaut["id_banc_affectation"]) ?>"<?php endif ?> required/>
-                    <select class="petit" name="id-salle" required>
-                        <option value="">Salle</option>
-                        <?php foreach($salles as $s): ?>
-                            <option value="<?= e($s["id_salle"]) ?>"
-                            <?php if($infosDefaut && $infosDefaut["id_salle_affectation"] == e($s["id_salle"])): ?> selected
-                            <?php endif ?>><?= e($s["nom_salle"])?></option>
+                <div>
+                    <label>Lieu d'affectation : </label><br>
+                    <select name="banc" required>
+                        <option value="">Séléctionner le banc</option>
+                        <?php foreach($bancs as $b): ?>
+                            <option value="<?= e($b["id_banc"]) ?>, <?= e($b["id_salle"]) ?>"
+                            <?php if($infosDefaut && $infosDefaut["id_banc_affectation"] == e($b["id_banc"]) && $infosDefaut["id_salle_affectation"] == e($b["id_salle"])): ?> 
+                                selected<?php endif ?>>
+                            Banc <?= e($b["id_banc"]) ?> - <?= e($b["nom_salle"]) ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -66,10 +65,10 @@
 
                 <div class="preview">
                     <label>Photo :</label><br>
-                    <img class="photo" id="photo-modif" 
-                    <?php if($infosDefaut): ?>
-                    src="<?= e($infosDefaut["lien_photo"])?>"
-                    <?php endif ?> alt=""/>
+                    <img id="photo-modif" <?php if($infosDefaut): ?>
+                    class="photo" src="<?= e($infosDefaut["lien_photo"])?>"
+                    <?php else: ?> class="photo hide"
+                    <?php endif ?> alt="apercu"/>
                     <p></p>
                 </div>
                 

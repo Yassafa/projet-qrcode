@@ -2,15 +2,17 @@
 
             <h2>AJOUTER UN BANC</h2>
             <form action="?controller=admin&action=insert_banc" method="post" id="form-ajout-banc" autocomplete="off">
-                <div>
-                    <label>N° banc :</label><br>
-                    <input class ="saisie" type="text" name="id-banc" placeholder="N°" required/>
-                </div>
+                <div class="affectation">
+                    <div>
+                        <label>N° banc :</label><br>
+                        <input class ="saisie" type="text" name="id-banc" placeholder="N°" required/>
+                    </div>
 
-                <div class="autocomplete">
-                    <label>Salle :</label><br>
-                    <input class ="saisie" id="ajout-banc-salle" type="text" name="nom-salle" placeholder="Salle" required/>
-                    <input type="hidden" id="liste-salles" value="<?= e(json_encode($salles)) ?>"/>
+                    <div class="autocomplete">
+                        <label>Salle :</label><br>
+                        <input class ="saisie" id="ajout-banc-salle" type="text" name="nom-salle" placeholder="Salle" required/>
+                        <input type="hidden" id="liste-salles" value="<?= e(json_encode($salles)) ?>"/>
+                    </div>
                 </div>
 
                 <?php if($_SESSION["role"] === "Admin"): ?>
@@ -28,6 +30,9 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+                <?php else: ?>
+                <input type="hidden" name="date-achat"/>
+                <input type="hidden" name="id-fournisseur"/>
                 <?php endif ?>
 
                 <div>

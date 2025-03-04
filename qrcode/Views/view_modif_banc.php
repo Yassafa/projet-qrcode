@@ -3,7 +3,7 @@
             <h2>MODIFIER UN BANC</h2>
             <form action="?controller=admin&action=update_banc" method="post" id="form-modif-banc" autocomplete="off">
                 <div>
-                    <label>Banc à modifier  : </label><br>
+                    <label>Banc à modifier : </label><br>
                     <select name="banc" class="refBanc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>

@@ -17,14 +17,14 @@
                     </select>
                 </div>
 
-                <div class="lieu-affectation">
-                    <label>Lieu d'affectation :</label>
-                    <input class="saisie" type="text" name="id-banc" placeholder="N°banc" required/>
-                    <select class="petit" name="id-salle" required>
-                            <option value="">Salle</option>
-                            <?php foreach($salles as $s): ?>
-                                <option value=<?= e($s["id_salle"]) ?>><?= e($s["nom_salle"]) ?></option>
-                            <?php endforeach ?>
+                <div>
+                    <label>Lieu d'affectation : </label><br>
+                    <select name="banc" required>
+                        <option value="">Séléctionner le banc</option>
+                        <?php foreach($bancs as $b): ?>
+                            <option value="<?= e($b["id_banc"]) ?>, <?= e($b["id_salle"]) ?>">
+                            Banc <?= e($b["id_banc"]) ?> - <?= e($b["nom_salle"]) ?></option>
+                        <?php endforeach ?>
                     </select>
                 </div>
 
@@ -43,6 +43,9 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+                <?php else: ?>
+                <input type="hidden" name="date-achat"/>
+                <input type="hidden" name="id-fournisseur"/>
                 <?php endif ?>
 
                 <div class="preview">

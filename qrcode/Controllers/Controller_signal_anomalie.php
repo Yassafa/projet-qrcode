@@ -33,9 +33,10 @@ class Controller_signal_anomalie extends Controller {
                 if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
                     $_POST["lien-photo"] = $file_name;
                 } else {
-                    $this->action_error("Une error a eu lieu lors de l'importation de la photo.");
+                    $this->action_error("Une erreur a eu lieu lors de l'importation de la photo.");
                 }
-            } else {
+            } 
+            else {
                 $_POST["lien-photo"] = null;
             }
             var_dump($_POST);

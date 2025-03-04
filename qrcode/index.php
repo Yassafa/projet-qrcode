@@ -4,10 +4,8 @@ if(isset($_POST["a"])) {
     $_SESSION["connecte"] = true;
     $_SESSION["role"] = $_POST["a"];
 }
-ini_set('dispaly_errors', '1');
-ini_set('dispaly_startup_errors', '1');
-error_reporting(E_ALL);
 require_once "Utils/functions.php";
+include "Utils/phpqrcode/qrlib.php";
 require_once "Models/Model.php";
 require_once "Controllers/Controller.php";
 

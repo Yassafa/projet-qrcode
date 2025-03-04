@@ -57,13 +57,13 @@ id_salle_affectation, id_banc_affectation, type_equipement) VALUES
 ("T63-L9", "2019-04-09", "bye", "Content/img/oscilloscope1.jpg", 1, 11, "EHTH", "Opérationnel", 2, "GTHYH", "Oscilloscope");
 
 INSERT INTO Anomalie(date_signalement, description_anomalie, personne_signalant, lien_photo, type_anomalie, id_equipement) VALUES
-("2022-05-08", "câble endommagé", "F.Butelle", "Content/img/alim1", "Panne", "P30-MN"),
-("2024-10-25", "problème surchauffe", "F.Butelle", "Content/img/oscilloscope1", "Panne", "T63-L9");
+("2022-05-08 14:01:41", "câble endommagé", "F.Butelle", "Content/img/alim1", "Panne", "P30-MN"),
+("2024-10-25 18:02:59", "problème surchauffe", "F.Butelle", "Content/img/oscilloscope1", "Panne", "T63-L9");
 
 INSERT INTO Deplacement(date_deplacement, description_deplacement, personne_deplacant, id_salle_origine, id_banc_origine, 
 id_salle_destination, id_banc_destination, id_equipement) VALUES
-("2024-10-21", null, "N.Fabre", 2, "GTHYH", 4, "TG5HY", "T63-L9"),
-("2024-10-23", null, "N.Fabre", 4, "TG5HY", 2, "GYBYB", "T63-L9"),
-("2024-10-24", "Remis à sa place initiale", "N.Fabre", 2, "GYBYB", 2, "GTHYH", "T63-L9"),
-("2024-11-11", null, "N.Fabre", 2, "GTHYH", 6, "YYBBF", "T63-L9"),
-("2024-11-13", "Laissez-le à cette place j'en aurai besoin demain", "N.Fabre", 6, "YYBBF", 2, "GTHYH", "T63-L9");
+("2024-10-21 15:52:00", null, "N.Fabre", 2, "GTHYH", 4, "TG5HY", "T63-L9"),
+("2024-10-23 13:56:00", null, "N.Fabre", 4, "TG5HY", 2, "GYBYB", "T63-L9"),
+("2024-10-24 17:03:00", "Remis à sa place initiale", "N.Fabre", 2, "GYBYB", 2, "GTHYH", "T63-L9"),
+("2024-11-11 09:36:00", null, "N.Fabre", 2, "GTHYH", 6, "YYBBF", "T63-L9"),
+("2024-11-13 17:06:00", "Laissez-le à cette place j'en aurai besoin demain", "N.Fabre", 6, "YYBBF", 2, "GTHYH", "T63-L9");
