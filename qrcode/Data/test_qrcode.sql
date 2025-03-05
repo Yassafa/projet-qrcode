@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2025 at 10:15 AM
+-- Generation Time: Mar 04, 2025 at 12:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -65,8 +65,8 @@ CREATE TABLE `banc` (
 
 INSERT INTO `banc` (`id_banc`, `id_salle`, `date_achat`, `commentaires`, `id_fournisseur`) VALUES
 ('AJLOM', 1, '2024-10-21', '', 1),
-('EG?IJ', 7, '2019-06-25', '', 1),
 ('EGETRG', 9, '2023-12-30', '', 1),
+('EGIJ', 7, '2019-06-25', '', 1),
 ('EHTH', 11, '2002-02-20', '', 1),
 ('EHTYJ', 11, '2011-11-11', '', 1),
 ('FSRTH', 9, '2021-06-23', '', 2),
@@ -82,7 +82,7 @@ INSERT INTO `banc` (`id_banc`, `id_salle`, `date_achat`, `commentaires`, `id_fou
 ('UHGRI', 7, '2022-04-30', '', 1),
 ('VBYHVYJ', 5, '2020-07-01', '', 1),
 ('VHHY', 4, '2010-05-17', '', 1),
-('VNH?NUK', 6, '2021-01-18', '', 2),
+('VNHNUK', 6, '2021-01-18', '', 2),
 ('VTTHH', 3, '2016-02-05', '', 1),
 ('XFTGT', 5, '2015-10-17', '', 1),
 ('YHYHYU', 3, '2020-12-25', '', 1),

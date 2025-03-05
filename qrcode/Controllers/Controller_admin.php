@@ -41,7 +41,7 @@ class Controller_admin extends Controller {
     public function action_insert_banc() {
         if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant") {
             $m = Model::getModel();
-            if(!(isset($_POST["id-banc"]) && preg_match("/^[A-Z,\?]{3,8}$/", $_POST["id-banc"]))){
+            if(!(isset($_POST["id-banc"]) && preg_match("/^[A-Z]{3,8}$/", $_POST["id-banc"]))){
                 $this->action_error("id-banc vide/incorrect");
             }
             if(isset($_POST["nom-salle"])) {
@@ -271,6 +271,7 @@ class Controller_admin extends Controller {
                 'typesEquipement' => $m->getListeTypes(),
                 'fournisseurs' => $m->getListeFournisseurs(),
                 'bancs' => $m->getListeBancs(),
+                'etats' => $m->getListeEtats(),
                 'materielDefaut' => $id,
                 'infosDefaut' => $infos
             ];
@@ -311,7 +312,6 @@ class Controller_admin extends Controller {
             else {
                 $_POST["lien-photo"] = $m->getInfosEquipement($_POST["id-equipement"])["lien_photo"];
             }
-            var_dump($_POST, $_FILES);
             $m->updateEquipement($_POST);
             header("Location: ?controller=infos_materiel&id=" . $_POST["id-equipement"]);
         }

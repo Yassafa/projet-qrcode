@@ -57,6 +57,12 @@ class Model {
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getListeEtats() {
+        $req = $this->bd->prepare('SELECT * FROM etat');
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getFournisseur($idFournisseur) {
         $req = $this->bd->prepare('SELECT * FROM fournisseur WHERE id_fournisseur = :idf');
         $req->bindValue(':idf', $idFournisseur);
@@ -206,7 +212,7 @@ class Model {
         $req = $this->bd->prepare(
             'UPDATE equipement
             SET type_equipement = :typ, id_banc_affectation = :idb, id_salle_affectation = :ids,
-            date_achat = :dta, id_fournisseur = :idf, lien_photo = :pht, infos_sup = :inf
+            date_achat = :dta, id_fournisseur = :idf, etat = :et, lien_photo = :pht, infos_sup = :inf
             WHERE id_equipement = :ide'
         );
         $req->bindValue(':ide', $data["id-equipement"]);
@@ -214,6 +220,7 @@ class Model {
         $req->bindValue(':inf', $data["commentaires"]);
         $req->bindValue(':pht', $data["lien-photo"]);
         $req->bindValue(':idf', $data["id-fournisseur"]);
+        $req->bindValue(':et', $data["etat"]);
         $req->bindValue(':ids', $data["id-salle"]);
         $req->bindValue(':idb', $data["id-banc"]);
         $req->bindValue(':typ', $data["type-equipement"]);
@@ -249,7 +256,7 @@ class Model {
         $req->bindValue(':ide', $data["id-equipement"]);
         $req->execute();
     }
-
+    
     public function setEtat($idEquipement, $etat) {
         $req = $this->bd->prepare('UPDATE equipement SET etat = :et WHERE id_equipement = :ide');
         $req->bindValue(':et', $etat);

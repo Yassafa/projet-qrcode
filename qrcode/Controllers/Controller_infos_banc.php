@@ -20,7 +20,7 @@ class Controller_infos_banc extends Controller {
                 $this->render("infos_banc", $data);
             }
             else {
-                $this->action_error("Ce banc n'existe pas dans la base de données");
+                $this->action_error("Ce banc n'existe pas dans la base de données.");
             }
         }
         else {

@@ -43,6 +43,19 @@
                 </div>
 
                 <div>
+                    <label>État :</label><br>
+                    <select name="etat" required>
+                        <option value="">Modifier l'état</option>
+                        <?php foreach($etats as $etat): ?>
+                            <option value="<?= e($etat["etat"]) ?>"
+                            <?php if($infosDefaut && $infosDefaut["etat"] == e($etat["etat"])): ?>
+                                selected<?php endif ?>>
+                            <?= e($etat["etat"]) ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+
+                <div>
                     <label>Date d'achat :</label><br>
                     <input class="date" type="date" name="date-achat"
                     <?php if($infosDefaut): ?> value="<?= e($infosDefaut["date_achat"]) ?>"
@@ -74,8 +87,7 @@
                 
                 <div class="input">
                     <label class = "bouton bleu file" for="file-modif">Modifier la photo</label>
-                    <input class="hide" id="file-modif" type="file" name="lien-photo" accept="image/*" capture="environment"
-                    <?php if($infosDefaut): ?> value="<?= e($infosDefaut["lien_photo"]) ?>"<?php endif ?>/>
+                    <input class="hide" id="file-modif" type="file" name="lien-photo" accept="image/*" capture="environment"/>
                 </div>
 
                 <div>
