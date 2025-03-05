@@ -18,7 +18,7 @@
                 </div>
 
                 <div>
-                    <label>Lieu d'affectation : </label><br>
+                    <label>Lieu d'affectation :</label><br>
                     <select name="banc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>

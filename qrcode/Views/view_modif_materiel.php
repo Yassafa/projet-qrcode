@@ -30,7 +30,7 @@
                 </div>
 
                 <div>
-                    <label>Lieu d'affectation : </label><br>
+                    <label>Lieu d'affectation :</label><br>
                     <select name="banc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>
@@ -74,7 +74,8 @@
                 
                 <div class="input">
                     <label class = "bouton bleu file" for="file-modif">Modifier la photo</label>
-                    <input class="hide" id="file-modif" type="file" name="lien-photo" accept="image/*" capture="environment"/>
+                    <input class="hide" id="file-modif" type="file" name="lien-photo" accept="image/*" capture="environment"
+                    <?php if($infosDefaut): ?> value="<?= e($infosDefaut["lien_photo"]) ?>"<?php endif ?>/>
                 </div>
 
                 <div>

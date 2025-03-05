@@ -39,13 +39,16 @@ class Controller_deplacement extends Controller {
                 $_POST["id-banc-origine"] = $tab_or[0];
                 $_POST["id-salle-origine"] = $tab_or[1];
             }
+            else {
+                $this->action_default();
+            }
             if(isset($_POST["banc-destination"])) {
                 $tab_ds = explode(',', $_POST["banc-destination"]);
                 $_POST["id-banc-destination"] = $tab_ds[0];
                 $_POST["id-salle-destination"] = $tab_ds[1];
             }
-            var_dump($_POST);
             $m->insertDeplacement($_POST);
+            header("Location: ?controller=infos_materiel&id=" . $_POST["id-equipement"]);
         }
         else {
             $this->action_default();

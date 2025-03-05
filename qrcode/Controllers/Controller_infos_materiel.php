@@ -7,9 +7,11 @@ class Controller_infos_materiel extends Controller {
             $m = Model::getModel();
             $tab = $m->getInfosEquipement($id);
             if ($tab) {
+                $f = $m->getFournisseur($tab["id_fournisseur"]);
                 $data = [
                     'title' => "Infos",
-                    'infosMateriel' => $tab
+                    'infosMateriel' => $tab,
+                    'fournisseur' => $f
                 ];
                 $this->render("infos_materiel", $data);
             }

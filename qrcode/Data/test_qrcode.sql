@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2025 at 02:19 PM
+-- Generation Time: Mar 04, 2025 at 10:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `anomalie` (
   `id_anomalie` bigint(20) UNSIGNED NOT NULL,
-  `date_signalement` date NOT NULL,
+  `date_signalement` datetime NOT NULL,
   `description_anomalie` text DEFAULT NULL,
   `personne_signalant` varchar(50) DEFAULT NULL,
   `lien_photo` varchar(50) DEFAULT NULL,
@@ -42,8 +42,8 @@ CREATE TABLE `anomalie` (
 --
 
 INSERT INTO `anomalie` (`id_anomalie`, `date_signalement`, `description_anomalie`, `personne_signalant`, `lien_photo`, `type_anomalie`, `id_equipement`) VALUES
-(1, '2022-05-08', 'câble endommagé', 'F.Butelle', 'Content/img/alim1', 'Panne', 'P30-MN'),
-(2, '2024-10-25', 'problème surchauffe', 'F.Butelle', 'Content/img/oscilloscope1', 'Panne', 'T63-L9');
+(1, '2022-05-08 14:01:41', 'câble endommagé', 'F.Butelle', 'Content/img/alim1', 'Panne', 'P30-MN'),
+(2, '2024-10-25 18:02:59', 'problème surchauffe', 'F.Butelle', 'Content/img/oscilloscope1', 'Panne', 'T63-L9');
 
 -- --------------------------------------------------------
 
@@ -96,7 +96,7 @@ INSERT INTO `banc` (`id_banc`, `id_salle`, `date_achat`, `commentaires`, `id_fou
 
 CREATE TABLE `deplacement` (
   `id_deplacement` bigint(20) UNSIGNED NOT NULL,
-  `date_deplacement` date NOT NULL,
+  `date_deplacement` datetime NOT NULL,
   `description_deplacement` text DEFAULT NULL,
   `personne_deplacant` varchar(50) DEFAULT NULL,
   `id_salle_origine` int(11) NOT NULL,
@@ -111,11 +111,11 @@ CREATE TABLE `deplacement` (
 --
 
 INSERT INTO `deplacement` (`id_deplacement`, `date_deplacement`, `description_deplacement`, `personne_deplacant`, `id_salle_origine`, `id_banc_origine`, `id_salle_destination`, `id_banc_destination`, `id_equipement`) VALUES
-(1, '2024-10-21', NULL, 'N.Fabre', 2, 'GTHYH', 4, 'TG5HY', 'T63-L9'),
-(2, '2024-10-23', NULL, 'N.Fabre', 4, 'TG5HY', 2, 'GYBYB', 'T63-L9'),
-(3, '2024-10-24', 'Remis à sa place initiale', 'N.Fabre', 2, 'GYBYB', 2, 'GTHYH', 'T63-L9'),
-(4, '2024-11-11', NULL, 'N.Fabre', 2, 'GTHYH', 6, 'YYBBF', 'T63-L9'),
-(5, '2024-11-13', 'Laissez-le à cette place j\'en aurai besoin demain', 'N.Fabre', 6, 'YYBBF', 2, 'GTHYH', 'T63-L9');
+(1, '2024-10-21 15:52:00', NULL, 'N.Fabre', 2, 'GTHYH', 4, 'TG5HY', 'T63-L9'),
+(2, '2024-10-23 13:56:00', NULL, 'N.Fabre', 4, 'TG5HY', 2, 'GYBYB', 'T63-L9'),
+(3, '2024-10-24 17:03:00', 'Remis à sa place initiale', 'N.Fabre', 2, 'GYBYB', 2, 'GTHYH', 'T63-L9'),
+(4, '2024-11-11 09:36:00', NULL, 'N.Fabre', 2, 'GTHYH', 6, 'YYBBF', 'T63-L9'),
+(5, '2024-11-13 17:06:00', 'Laissez-le à cette place j\'en aurai besoin demain', 'N.Fabre', 6, 'YYBBF', 2, 'GTHYH', 'T63-L9');
 
 -- --------------------------------------------------------
 
@@ -254,6 +254,7 @@ CREATE TABLE `typeanomalie` (
 --
 
 INSERT INTO `typeanomalie` (`type_anomalie`) VALUES
+('Apparition'),
 ('Disparition'),
 ('Panne');
 

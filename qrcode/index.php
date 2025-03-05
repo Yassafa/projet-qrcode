@@ -5,8 +5,8 @@ if(isset($_POST["a"])) {
     $_SESSION["role"] = $_POST["a"];
 }
 require_once "Utils/functions.php";
-include "Utils/phpqrcode/qrlib.php";
 require_once "Models/Model.php";
+require_once "Utils/initqrcode.php";
 require_once "Controllers/Controller.php";
 
 $controllers = ["acceuil","infos_banc","infos_materiel","deplacement","signal_anomalie","admin","login"];

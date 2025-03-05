@@ -63,10 +63,10 @@ class Controller_admin extends Controller {
                 $_POST["date-achat"] = null;
             }
             $m->addBanc($_POST);
-            var_dump($_POST);
-            $lien_destination = "https://jupyter.univ-paris13.fr/~12302332/projet-qrcode/qrcode/?controller=infos_banc&banc=" . $_POST["id-banc"] . "&salle=" . $_POST["id-salle"];
+            $lien_destination = "https://jupyter.univ-paris13.fr/projet-qrcode/?controller=infos_banc&banc=" . $_POST["id-banc"] . "&salle=" . $_POST["id-salle"];
             $lien_stockage = "Content/qrcodes/" . $_POST["id-banc"] . $_POST["nom-salle"] . ".png";
             QRcode::png($lien_destination, $lien_stockage);
+            header("Location: ?controller=infos_banc&banc=" . $_POST["id-banc"] . "&salle=" . $_POST["id-salle"]);
         }
         else {
             $this->action_default();
@@ -124,11 +124,11 @@ class Controller_admin extends Controller {
             } else {
                 $this->action_error("Aucun fichier importé.");
             }
-            var_dump($_POST);
             $m->addEquipement($_POST);
-            $lien_destination = "https://jupyter.univ-paris13.fr/~12302332/projet-qrcode/qrcode/?controller=infos_materiel&id=" . $_POST["id-equipement"];
+            $lien_destination = "https://jupyter.univ-paris13.fr/projet-qrcode/?controller=infos_materiel&id=" . $_POST["id-equipement"];
             $lien_stockage = "Content/qrcodes/" . $_POST["id-equipement"] . ".png";
             QRcode::png($lien_destination, $lien_stockage);
+            header("Location: ?controller=infos_materiel&id=" . $_POST["id-equipement"]);
         }
         else {
             $this->action_default();
@@ -152,11 +152,16 @@ class Controller_admin extends Controller {
     public function action_del_banc() {
         if(isset($_SESSION["connecte"]) && $_SESSION["role"] !== "Etudiant") {
             $m = Model::getModel();
-            if(!(isset($_POST["id-banc"]) && isset($_POST["id-salle"]) && $m->getBanc($_POST["id-banc"],$_POST['id-salle']))){
-                $this->action_error("Aucun banc n'a été trouvé");
+            if(isset($_POST["banc"])){
+                $tab = explode(',', $_POST["banc"]);
+                $_POST["id-banc"] = $tab[0];
+                $_POST["id-salle"] = $tab[1];
             }
-            var_dump($_POST);
+            else {
+                $this->action_error("Banc non renseigné");
+            }
             $m->delBanc($_POST);
+            header("Location: ?controller=admin");
         }
         else {
             $this->action_default();
@@ -188,8 +193,8 @@ class Controller_admin extends Controller {
             if(!(isset($_POST["id-equipement"]) && $m->getEquipement($_POST["id-equipement"]))){
                 $this->action_error("Identifiant invalide");
             }
-            var_dump($_POST);
             $m->delEquipement($_POST);
+            header("Location: ?controller=admin");
         }
         else {
             $this->action_default();
@@ -241,8 +246,8 @@ class Controller_admin extends Controller {
             if($_POST["id-fournisseur"] == "") {
                 $_POST["id-fournisseur"] = null;
             }
-            var_dump($_POST);
             $m->updateBanc($_POST);
+            header("Location: ?controller=infos_banc&banc=" . $_POST["id-banc"] . "&salle=" . $_POST["id-salle"]);
         }
         else {
             $this->action_default();
@@ -285,8 +290,13 @@ class Controller_admin extends Controller {
             if($_POST["id-fournisseur"] == "") {
                 $_POST["id-fournisseur"] = null;
             }
-            if(!(isset($_POST["id-banc"]) && isset($_POST["id-salle"]) && $m->getBanc($_POST["id-banc"],$_POST['id-salle']))){
-                $this->action_error("Lieu affectation invalide");
+            if(isset($_POST["banc"])){
+                $tab = explode(',', $_POST["banc"]);
+                $_POST["id-banc"] = $tab[0];
+                $_POST["id-salle"] = $tab[1];
+            }
+            else {
+                $this->action_error("Lieu d'affectation non renseigné");
             }
             if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
                 $upload_dir = "Content/img/";
@@ -297,12 +307,13 @@ class Controller_admin extends Controller {
                 } else {
                     $this->action_error("Une erreur a eu lieu lors de l'importation de la photo.");
                 }
-            } 
-            else {
-                $this->action_error("Aucun fichier importé.");
             }
-            var_dump($_POST);
+            else {
+                $_POST["lien-photo"] = $m->getInfosEquipement($_POST["id-equipement"])["lien_photo"];
+            }
+            var_dump($_POST, $_FILES);
             $m->updateEquipement($_POST);
+            header("Location: ?controller=infos_materiel&id=" . $_POST["id-equipement"]);
         }
         else {
             $this->action_default();

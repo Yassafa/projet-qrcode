@@ -1,4 +1,4 @@
-INSERT INTO TypeAnomalie VALUES ("Disparition"), ("Panne");
+INSERT INTO TypeAnomalie VALUES ("Disparition"), ("Panne"), ("Apparition");
 
 INSERT INTO TypeEquipement VALUES ("Oscilloscope",""), ("GBF", ""), ("Alimentation", ""), ("Multimètre", "");
 

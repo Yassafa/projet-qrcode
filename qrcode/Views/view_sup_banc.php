@@ -3,7 +3,7 @@
             <h2>SUPPRIMER UN BANC</h2>
             <form action="?controller=admin&action=del_banc" method="post" id="form-sup-banc" autocomplete="off">
                 <div>
-                    <label>Banc à supprimer :</label></br>
+                    <label>Banc à supprimer :</label><br>
                     <select name="banc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>

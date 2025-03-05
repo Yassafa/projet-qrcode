@@ -2,14 +2,20 @@
 
             <h2>INFORMATION ÉQUIPEMENT</h2>
 
+            <div class="title">
+                <h3 class="nom-materiel"><?= e($infosMateriel["type_equipement"]) ?> <?= e($infosMateriel["id_equipement"]) ?></h3>
+                <a href="Content/qrcodes/<?= e($infosMateriel["id_equipement"]) . ".png" ?>" target="_blank">
+                    <img class="qrcode" src="Content/qrcodes/<?= e($infosMateriel["id_equipement"]) . ".png" ?>"/>
+                </a>
+            </div>
+            
             <img class="photo" id="photo-materiel" src="<?= e($infosMateriel["lien_photo"]) ?>" alt="<?= e($infosMateriel["type_equipement"]) ?>"/>
 
-            <h3 class="nom-materiel"><?= e($infosMateriel["type_equipement"]) ?> <?= e($infosMateriel["id_equipement"]) ?></h3>
             <p>État : <?php if(e($infosMateriel["etat"]) == "Défectueux"): ?><p2 class="defectueux">⚠ Défectueux</p2><?php else: ?><?= e($infosMateriel["etat"]) ?><?php endif ?></p>
             <p>Localisation actuelle : <?= e($infosMateriel["nom_salle_actuelle"]) ?> - Banc <?= e($infosMateriel["id_banc_actuel"]) ?></p>
             <p>Lieu d'affectation : <?= e($infosMateriel["nom_salle_affectation"]) ?> - Banc <?= e($infosMateriel["id_banc_affectation"]) ?></p>
             <p>Date d'achat : <?= e($infosMateriel["date_achat_format"]) ?></p>
-            <p>Fournisseur : <?= e($infosMateriel["nom_fournisseur"]) ?></p>
+            <p>Fournisseur : <?php if($fournisseur): ?><?= e($fournisseur["nom_fournisseur"]) ?><?php endif ?></p>
             <p>Infos supplémentaires :<br><?= e($infosMateriel["infos_sup"]) ?></p>
             
             <br><br><br>

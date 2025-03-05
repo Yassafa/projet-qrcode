@@ -57,8 +57,18 @@ class Model {
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getFournisseur($idFournisseur) {
+        $req = $this->bd->prepare('SELECT * FROM fournisseur WHERE id_fournisseur = :idf');
+        $req->bindValue(':idf', $idFournisseur);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function getBanc($idBanc,$idSalle) {
-        $req = $this->bd->prepare('SELECT * FROM banc WHERE id_banc = :idb AND id_salle = :ids');
+        $req = $this->bd->prepare(
+            'SELECT *, DATE_FORMAT(date_achat, "%d/%m/%Y") AS date_achat_format 
+            FROM banc WHERE id_banc = :idb AND id_salle = :ids'
+        );
         $req->bindValue(':idb', $idBanc);
         $req->bindValue(':ids', $idSalle);
         $req->execute();
@@ -97,11 +107,10 @@ class Model {
         $req = $this->bd->prepare(
             'SELECT e.*, s_act.nom_salle AS nom_salle_actuelle,
             s_aff.nom_salle AS nom_salle_affectation,
-            DATE_FORMAT(e.date_achat, "%d/%m/%Y") AS date_achat_format,
-            f.nom_fournisseur FROM equipement e
+            DATE_FORMAT(e.date_achat, "%d/%m/%Y") AS date_achat_format
+            FROM equipement e
             JOIN salle s_act ON e.id_salle_actuelle = s_act.id_salle
             JOIN salle s_aff ON e.id_salle_affectation = s_aff.id_salle
-            LEFT OUTER JOIN fournisseur f ON e.id_fournisseur = f.id_fournisseur
             WHERE e.id_equipement = :ide'
         );
         $req->bindValue(':ide', $idEquipement);
@@ -238,6 +247,13 @@ class Model {
         $req->bindValue(':ids_ds', $data["id-salle-destination"]);
         $req->bindValue(':idb_ds', $data["id-banc-destination"]);
         $req->bindValue(':ide', $data["id-equipement"]);
+        $req->execute();
+    }
+
+    public function setEtat($idEquipement, $etat) {
+        $req = $this->bd->prepare('UPDATE equipement SET etat = :et WHERE id_equipement = :ide');
+        $req->bindValue(':et', $etat);
+        $req->bindValue(':ide', $idEquipement);
         $req->execute();
     }
 }
