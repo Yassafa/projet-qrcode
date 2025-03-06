@@ -114,14 +114,17 @@ class Controller_admin extends Controller {
             }
             if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
                 $upload_dir = "Content/img/";
-                $file_name = basename($_FILES["lien-photo"]["name"]);
+                $nb = $m->getNbEquipementsByType($_POST["type-equipement"])["nb"] + 1;
+                $file_name = $_POST["type-equipement"] . $nb . ".jpg";
                 $target_file = $upload_dir . $file_name;
+                var_dump($nb, $file_name, $target_file);
                 if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
                     $_POST["lien-photo"] = $target_file;
                 } else {
                     $this->action_error("Une erreur a eu lieu lors de l'importation de la photo.");
                 }
-            } else {
+            } 
+            else {
                 $this->action_error("Aucun fichier importé.");
             }
             $m->addEquipement($_POST);
@@ -299,9 +302,10 @@ class Controller_admin extends Controller {
             else {
                 $this->action_error("Lieu d'affectation non renseigné");
             }
+            $lien_photo = $m->getInfosEquipement($_POST["id-equipement"])["lien_photo"];
             if (isset($_FILES["lien-photo"]) && $_FILES["lien-photo"]["error"] == 0) {
                 $upload_dir = "Content/img/";
-                $file_name = basename($_FILES["lien-photo"]["name"]);
+                $file_name = basename($lien_photo);
                 $target_file = $upload_dir . $file_name;
                 if (move_uploaded_file($_FILES["lien-photo"]["tmp_name"], $target_file)) {
                     $_POST["lien-photo"] = $target_file;
@@ -310,7 +314,7 @@ class Controller_admin extends Controller {
                 }
             }
             else {
-                $_POST["lien-photo"] = $m->getInfosEquipement($_POST["id-equipement"])["lien_photo"];
+                $_POST["lien-photo"] = $lien_photo;
             }
             $m->updateEquipement($_POST);
             header("Location: ?controller=infos_materiel&id=" . $_POST["id-equipement"]);

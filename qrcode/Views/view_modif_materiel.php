@@ -3,7 +3,7 @@
             <h2>MODIFIER UN ÉQUIPEMENT</h2>
             <form action="?controller=admin&action=update_materiel" method="post" id="form-modif-materiel" autocomplete="off" enctype="multipart/form-data">
                 <div>
-                    <label>Matériel à modifier :</label><br>
+                    <label>Matériel à modifier : <b>*</b></label><br>
                     <select name="id-equipement" class="refMateriel" required>
                         <option value="">Séléctionner le matériel</option>
                         <?php foreach($equipements as $e): ?>
@@ -16,7 +16,7 @@
                 </div>
 
                 <div>
-                    <label>Type d'équipement :</label><br>
+                    <label>Type d'équipement : <b>*</b></label><br>
                     <select name="type-equipement" required>
                         <option value="">Séléctionner le type</option>
                         <?php foreach($typesEquipement as $t): ?>
@@ -30,7 +30,7 @@
                 </div>
 
                 <div>
-                    <label>Lieu d'affectation :</label><br>
+                    <label>Lieu d'affectation : <b>*</b></label><br>
                     <select name="banc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>
@@ -43,7 +43,7 @@
                 </div>
 
                 <div>
-                    <label>État :</label><br>
+                    <label>État : <b>*</b></label><br>
                     <select name="etat" required>
                         <option value="">Modifier l'état</option>
                         <?php foreach($etats as $etat): ?>
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="preview">
-                    <label>Photo :</label><br>
+                    <label>Photo : <b>*</b></label><br>
                     <img id="photo-modif" <?php if($infosDefaut): ?>
                     class="photo" src="<?= e($infosDefaut["lien_photo"])?>"
                     <?php else: ?> class="photo hide"
@@ -91,7 +91,7 @@
                 </div>
 
                 <div>
-                    <label>Infos supplémentaires (optionnel) :</label><br>
+                    <label>Infos supplémentaires :</label><br>
                     <textarea name="commentaires" id="saisie-materiel"><?php if($infosDefaut): ?><?= e($infosDefaut["infos_sup"]) ?><?php endif ?></textarea>
                 </div>
 

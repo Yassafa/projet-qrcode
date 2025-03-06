@@ -3,7 +3,7 @@
             <h2>SIGNALER UNE ANOMALIE</h2>
             <form action="?controller=signal_anomalie&action=insert" method="post" id="form-anomalie" autocomplete="off" enctype="multipart/form-data">
                 <div>
-                    <label>Matériel  :</label>
+                    <label>Matériel à signaler : <b>*</b></label><br>
                     <select name="id-equipement" required>
                         <option value="">Séléctionner le matériel</option>
                         <?php foreach($equipements as $e): ?>
@@ -16,7 +16,7 @@
                 </div>
 
                 <div>
-                    <label>Type d'anomalie : </label><br>
+                    <label>Type d'anomalie : <b>*</b></label><br>
                     <?php foreach($typesAnomalie as $t): ?>
                         <input type="radio" name="type-anomalie" value="<?= e($t["type_anomalie"]) ?>" required><label><?= e($t["type_anomalie"]) ?></label>
                     <?php endforeach ?>

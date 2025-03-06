@@ -3,12 +3,12 @@
             <h2>AJOUTER UN ÉQUIPEMENT</h2>
             <form action="?controller=admin&action=insert_materiel" method="post" id="form-ajout-materiel" autocomplete="off" enctype="multipart/form-data">
                 <div>
-                    <label>Identifiant :</label></br>
+                    <label>Identifiant : <b>*</b></label></br>
                     <input class="saisie" type="text" name="id-equipement" placeholder="Id" required/>
                 </div>
 
                 <div>
-                    <label>Type d'équipement :</label></br>
+                    <label>Type d'équipement : <b>*</b></label></br>
                     <select name="type-equipement" required>
                         <option value="">Séléctionner le type</option>
                         <?php foreach($typesEquipement as $t): ?>
@@ -18,7 +18,7 @@
                 </div>
 
                 <div>
-                    <label>Lieu d'affectation :</label><br>
+                    <label>Lieu d'affectation : <b>*</b></label><br>
                     <select name="banc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>
@@ -49,7 +49,7 @@
                 <?php endif ?>
 
                 <div class="preview">
-                    <label>Photo :</label></br>
+                    <label>Photo : <b>*</b></label></br>
                     <img class = "photo hide" id="photo-ajout" src=""></img>
                     <p>Aucun fichier séléctionné</p>
                 </div>
@@ -60,7 +60,7 @@
                 </div>
 
                 <div>
-                    <label>Infos supplémentaires (optionnel) :</label></br>
+                    <label>Infos supplémentaires :</label></br>
                     <textarea name="commentaires" id="saisie-materiel"></textarea>
                 </div>
 

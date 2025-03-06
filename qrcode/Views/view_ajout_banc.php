@@ -4,12 +4,12 @@
             <form action="?controller=admin&action=insert_banc" method="post" id="form-ajout-banc" autocomplete="off">
                 <div class="affectation">
                     <div>
-                        <label>N° banc :</label><br>
+                        <label>N° banc : <b>*</b></label><br>
                         <input class ="saisie" type="text" name="id-banc" placeholder="N°" required/>
                     </div>
 
                     <div class="autocomplete">
-                        <label>Salle :</label><br>
+                        <label>Salle : <b>*</b></label><br>
                         <input class ="saisie" id="ajout-banc-salle" type="text" name="nom-salle" placeholder="Salle" required/>
                         <input type="hidden" id="liste-salles" value="<?= e(json_encode($salles)) ?>"/>
                     </div>
@@ -36,7 +36,7 @@
                 <?php endif ?>
 
                 <div>
-                    <label>Infos supplémentaires (optionnel) :</label><br>
+                    <label>Infos supplémentaires :</label><br>
                     <textarea name="commentaires" id="saisie-banc"></textarea>
                 </div>
 

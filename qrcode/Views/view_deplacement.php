@@ -3,7 +3,7 @@
             <h2>DÉPLACER UN ÉQUIPEMENT</h2>
             <form action="?controller=deplacement&action=insert" method="post" id="form-deplacement" autocomplete="off">
                 <div>
-                    <label>Matériel  : </label>
+                    <label>Matériel à déplacer : <b>*</b></label><br>
                     <select name="id-equipement" class="refMateriel" required>
                         <option value="">Séléctionner le matériel</option>
                         <?php foreach($equipements as $e): ?>
@@ -16,7 +16,7 @@
                 </div>
 
                 <div>
-                <label>Banc actuel  : </label></br>
+                <label>Banc actuel  : <b>*</b></label><br>
                     <select name="banc-origine" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>
@@ -28,7 +28,7 @@
                 </div>
 
                 <div>
-                <label>Déplacer vers : </label></br>
+                <label>Déplacer vers : <b>*</b></label><br>
                     <select name="banc-destination" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>
@@ -38,7 +38,7 @@
                 </div>
                 
                 <div>
-                    <label>Commentaires (optionnel) :</label><br>
+                    <label>Commentaires :</label><br>
                     <textarea name="description-deplacement" id="saisie-deplacement"></textarea>
                 </div>
 

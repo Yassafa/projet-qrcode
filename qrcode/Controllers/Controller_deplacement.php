@@ -47,6 +47,7 @@ class Controller_deplacement extends Controller {
                 $_POST["id-banc-destination"] = $tab_ds[0];
                 $_POST["id-salle-destination"] = $tab_ds[1];
             }
+            $m->setLocalisation($_POST);
             $m->insertDeplacement($_POST);
             header("Location: ?controller=infos_materiel&id=" . $_POST["id-equipement"]);
         }

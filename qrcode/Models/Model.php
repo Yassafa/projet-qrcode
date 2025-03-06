@@ -87,6 +87,13 @@ class Model {
         $req->execute();
         return $req->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getNbEquipementsByType($type) {
+        $req = $this->bd->prepare('SELECT COUNT(*) AS nb FROM equipement WHERE type_equipement = :ty');
+        $req->bindValue(':ty', $type);
+        $req->execute();
+        return $req->fetch(PDO::FETCH_ASSOC);
+    }
     
     public function getInfosBanc($idBanc, $idSalle) {
         $req = $this->bd->prepare(
@@ -241,6 +248,18 @@ class Model {
         $req->execute();
     }
 
+    public function setLocalisation($data) {
+        $req = $this->bd->prepare(
+            'UPDATE equipement 
+            SET id_salle_actuelle = :ids, id_banc_actuel = :idb 
+            WHERE id_equipement = :ide'
+        );
+        $req->bindValue(':ids', $data["id-salle-destination"]);
+        $req->bindValue(':idb', $data["id-banc-destination"]);
+        $req->bindValue(':ide', $data["id-equipement"]);
+        $req->execute();
+    }
+    
     public function insertDeplacement($data) {
         $req = $this->bd->prepare(
             'INSERT INTO deplacement(date_deplacement, description_deplacement, personne_deplacant,
@@ -256,7 +275,7 @@ class Model {
         $req->bindValue(':ide', $data["id-equipement"]);
         $req->execute();
     }
-    
+
     public function setEtat($idEquipement, $etat) {
         $req = $this->bd->prepare('UPDATE equipement SET etat = :et WHERE id_equipement = :ide');
         $req->bindValue(':et', $etat);

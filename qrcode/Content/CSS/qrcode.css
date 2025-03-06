@@ -73,6 +73,10 @@ a {
     color: inherit;
 }
 
+main b {
+    color: red;
+}
+
 h1 {
     font-family: NotoSans;
     font-size: 32px;

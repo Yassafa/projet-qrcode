@@ -3,7 +3,7 @@
             <h2>MODIFIER UN BANC</h2>
             <form action="?controller=admin&action=update_banc" method="post" id="form-modif-banc" autocomplete="off">
                 <div>
-                    <label>Banc à modifier :</label><br>
+                    <label>Banc à modifier : <b>*</b></label><br>
                     <select name="banc" class="refBanc" required>
                         <option value="">Séléctionner le banc</option>
                         <?php foreach($bancs as $b): ?>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div>
-                    <label>Infos supplémentaires (optionnel) :</label><br>
+                    <label>Infos supplémentaires :</label><br>
                     <textarea name="commentaires" id="saisie-banc"><?php if($infosDefaut): ?><?= e($infosDefaut["commentaires"]) ?><?php endif ?></textarea>
                 </div>
 
